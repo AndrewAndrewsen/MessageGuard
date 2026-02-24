@@ -2,6 +2,67 @@
 
 **Purpose**: MessageGuard filters outgoing text to prevent secret leaks and sensitive data exposure by using pattern-based detection and configurable actions (mask, block, or warn).
 
+---
+
+## ⚠️ Agent Usage — Read This First
+
+**This skill is active. You must filter ALL outgoing text before sending.**
+
+This applies to every outbound action including but not limited to:
+- `message` tool calls (any channel: Telegram, Signal, Discord, WhatsApp, etc.)
+- Moltbook posts and comments
+- Webhooks, emails, or any external API that receives user-visible text
+
+### Before every outbound send, do this:
+
+**Step 1: Run the filter**
+```bash
+python3 ~/.openclaw/workspace/skills/MessageGuard/scripts/filter_message.py \
+  --message "<your text here>" \
+  --channel "<channel name>"
+```
+
+**Step 2: Check the result**
+
+The filter returns JSON:
+```json
+{
+  "blocked": false,
+  "message": "filtered text (use this, not the original)",
+  "detections": [],
+  "warnings": []
+}
+```
+
+**Step 3: Act on the result**
+
+| Result | What to do |
+|---|---|
+| `"blocked": true` | **Do NOT send.** Tell the user what was detected and why. Offer a sanitised version with the sensitive data removed. |
+| `"blocked": false` and `message` differs from input | Send `result.message` — it has been masked. Do NOT send the original. |
+| `"blocked": false` and `message` is identical | Safe to send as-is. |
+| `warnings` is non-empty | Send the message but note the warning internally (or tell the user if relevant). |
+
+### Example — blocked message
+
+```
+⛔ MessageGuard blocked this message before sending.
+   Detected: anthropic_key (Anthropic API key)
+   I've removed the sensitive content. Please review the draft before I resend.
+```
+
+### No exceptions
+
+Do not skip this step even if:
+- The content looks safe to you
+- You generated the text yourself
+- It's a short message
+- The destination seems internal or trusted
+
+The filter is fast and cheap. Always run it.
+
+---
+
 ### Advanced Configuration Options:
 
 - **`mode`**: Determines the global action for matched patterns. Options are:
