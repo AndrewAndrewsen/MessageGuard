@@ -1,0 +1,57 @@
+{
+  "name": "@andrewlabs/messageguard",
+  "version": "1.1.0",
+  "description": "OpenClaw plugin: filters outgoing messages for API keys, credentials, PII, and other sensitive data using MessageGuard.",
+  "type": "module",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "filter.js",
+    "filter.d.ts",
+    "types.js",
+    "types.d.ts",
+    "openclaw.plugin.json",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "openclaw",
+    "openclaw-plugin",
+    "messageguard",
+    "secret-detection",
+    "security",
+    "message-filter"
+  ],
+  "author": "AndrewAndersen",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AndrewAndrewsen/MessageGuard.git"
+  },
+  "homepage": "https://github.com/AndrewAndrewsen/MessageGuard#readme",
+  "bugs": {
+    "url": "https://github.com/AndrewAndrewsen/MessageGuard/issues"
+  },
+  "openclaw": {
+    "extensions": [
+      "./index.js"
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.4.5"
+  },
+  "peerDependencies": {
+    "openclaw": ">=2026.0.0"
+  },
+  "peerDependenciesMeta": {
+    "openclaw": {
+      "optional": true
+    }
+  }
+}

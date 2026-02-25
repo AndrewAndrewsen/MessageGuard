@@ -1,0 +1,39 @@
+{
+  "id": "messageguard",
+  "name": "MessageGuard",
+  "description": "Filters outgoing messages for secrets and sensitive data before they are sent.",
+  "version": "1.0.0",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "enabled": {
+        "type": "boolean",
+        "default": true
+      },
+      "scriptPath": {
+        "type": "string",
+        "default": "~/.openclaw/workspace/skills/MessageGuard/scripts/filter_message.py"
+      },
+      "configPath": {
+        "type": "string"
+      }
+    }
+  },
+  "uiHints": {
+    "enabled": {
+      "label": "Enable MessageGuard",
+      "help": "When disabled, all messages pass through unfiltered."
+    },
+    "scriptPath": {
+      "label": "Path to filter_message.py",
+      "placeholder": "~/.openclaw/workspace/skills/MessageGuard/scripts/filter_message.py",
+      "help": "Absolute or ~ path to the MessageGuard filter script."
+    },
+    "configPath": {
+      "label": "Path to filter config (optional)",
+      "placeholder": "~/.openclaw/messageguard.yaml",
+      "help": "Optional path to a YAML/JSON config file for MessageGuard patterns and mode."
+    }
+  }
+}
